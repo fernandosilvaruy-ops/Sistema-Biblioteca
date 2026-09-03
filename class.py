@@ -1,13 +1,44 @@
-class Livro:
-    __id = 0
+class Autor:
+    def __init__(self, nome, nacionalidade):
+        self.__nome = nome
+        self.__nacionalidade = nacionalidade
+        self.__livrosEscritos = []
+
+    def get_nome(self):
+        return self.__nome
     
-    def __init__(self, titulo, autor):
+    def set_nome(self, novoNome):
+        self.__nome = novoNome
+
+    def get_nacionalidade(self):
+        return self.__nacionalidade
+    
+    def get_livrosEscritos(self):
+        return self.__livrosEscritos
+
+    def criar_livro(self, titulo, autor):
+        self.__nomeLivro = titulo
+        self.__autor = autor
+        self.__livrosEscritos.append(Livro)
+
+
+class Livro:
+    def __init__(self, titulo, autor, ano):
         self.__titulo = titulo
         self.__autor = autor
-        self.__meuID = Livro.__id
+        self.__ano = ano
         self.__disponibilidade = True
         self.__emprestadoPara = []
-        Livro.__id += 1
+        self.__listaDeAutores = []
+        
+        def adicionarAutores(self, autor):
+            self.__listaDeAutores.append(autor)
+    
+        def removerAutor(self, autor):
+        self.__listaDeAutores.remove(autor)
+
+        def consultarAutores(self,):
+            for autor in self.__listaDeAutores:
 
         def get_titulo(self):
             return self.__titulo
@@ -21,8 +52,8 @@ class Livro:
         def set_autor(self, novoAutor):
             self.__autor = novoAutor
 
-        def get_Id(self):
-            return self.__id
+        def get_ano(self):
+            return self.__ano
 
         def get_Disponibilidade(self):
             return self.__disponibilidade
@@ -40,7 +71,15 @@ class Usuario:
         self.__matricula = matricula
         self.emprestados = livrosEmprestados
         self.__listaDeEmprestimo = []
+        self.__bibliotecaAssossiada = None
+
+    def AssossiarBiblioteca(self, biblioteca):
+        self.__bibliotecaAssossiada = biblioteca
     
+    
+    def desassossiarBiblioteca(self):
+        self.__bibliotecaAssossiada = None
+
     def emprestarLivro(self, livro):
         self.__listaDeEmprestimo.append(livro)
 
@@ -48,9 +87,20 @@ class Usuario:
         self.__listaDeEmprestimo.remove(livro)
 
 class Biblioteca:
-    def __init__(self):
-        self.__listaDeLivros = []        
+    def __init__(self, nome):
+        self.__nome = nome
+        self.__listaDeLivros = []
+        self.__listaDeUsuarios = []     
+
+    def get_nome(self):
+        return self.__nome
     
+    def set_nome(self, novoNome):
+        self.__nome = novoNome
+    
+    def adicionarCadastroUsuario(self, usuario):
+        self.__listaDeUsuarios.append(usuario)
+
     def adicionarLivroAoAcervo(self, livro):
         self.__listaDeLivros.append(livro)
     
@@ -60,4 +110,6 @@ class Biblioteca:
             livro.emprestarLivro(usuario)
 
 
-    def devolver_livro(self, livro):
+    def devolver_livro(self, livro, usuario):
+        if (livro.getDisponibilidade == False):
+            usuario.devolverLivro(livro)
